@@ -1,7 +1,19 @@
 import { defineConfig } from "tinacms";
+// import { slugify } from "../src/js/helpers";
 
 // Your hosting provider likely exposes this as an environment variable
 const branch = process.env.HEAD || process.env.VERCEL_GIT_COMMIT_REF || "main";
+
+function slugify(text) {
+  return text
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]+/g, "")
+    .replace(/--+/g, "-")
+    .replace(/^-+/, "")
+    .replace(/-+$/, "");
+}
 
 export default defineConfig({
   branch,
@@ -22,8 +34,22 @@ export default defineConfig({
       {
         name: "posts",
         label: "Posts",
-        path: "content/posts",
+        path: "src/content/posts",
         format: "md",
+        ui: {
+          filename: {
+            // if disabled, the editor can not edit the filename
+            readonly: true,
+            // values is an object containing all values of the form
+            slugify: (values) => {
+              if (values.title) {
+                return slugify(values.title);
+              } else {
+                return "";
+              }
+            },
+          },
+        },
         fields: [
           {
             type: "string",
@@ -91,8 +117,22 @@ export default defineConfig({
       {
         label: "Authors",
         name: "authors",
-        path: "content/authors",
+        path: "src/content/authors",
         format: "json",
+        ui: {
+          filename: {
+            // if disabled, the editor can not edit the filename
+            readonly: true,
+            // values is an object containing all values of the form
+            slugify: (values) => {
+              if (values.name) {
+                return slugify(values.name);
+              } else {
+                return "";
+              }
+            },
+          },
+        },
         fields: [
           {
             label: "Name",
@@ -112,8 +152,22 @@ export default defineConfig({
       {
         label: "Categories",
         name: "categories",
-        path: "content/categories",
+        path: "src/content/categories",
         format: "json",
+        ui: {
+          filename: {
+            // if disabled, the editor can not edit the filename
+            readonly: true,
+            // values is an object containing all values of the form
+            slugify: (values) => {
+              if (values.name) {
+                return slugify(values.name);
+              } else {
+                return "";
+              }
+            },
+          },
+        },
         fields: [
           {
             label: "Name",

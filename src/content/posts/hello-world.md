@@ -1,8 +1,9 @@
 ---
 title: 'Hello, World!'
-authors: content/authors/web_reaper.json
-categories: content/categories/astro.json
+authors: src/content/authors/web_reaper.json
+categories: src/content/categories/astro.json
 datetime: '2023-03-09T05:00:00.000Z'
+description: Astro description
 ---
 
 ## Hello World!
