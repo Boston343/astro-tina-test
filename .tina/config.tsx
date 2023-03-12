@@ -20,15 +20,20 @@ function slugify(text) {
 
 // --------------------------------------------------------
 // custom length warning react component
-// const WarningLength = (props) => {
-//   const { value, maxLen } = props;
-//   const strLen = value?.length || 0;
-//   if (strLen > maxLen) {
-//     return <p>This field is too long</p>;
-//   } else {
-//     return null;
-//   }
-// };
+const InputTextWithWarning = (props) => {
+  const { input, maxLen, inputClass, warningClass } = props;
+  const strLen = input?.value?.length || 0;
+  return (
+    <div>
+      <input name={input.name} type="text" className={inputClass} {...input} />
+      {strLen > maxLen ? (
+        <span className={warningClass}>
+          The {input.name} should be shorter than {maxLen.toString()} characters
+        </span>
+      ) : null}
+    </div>
+  );
+};
 
 // --------------------------------------------------------
 export default defineConfig({
@@ -74,24 +79,40 @@ export default defineConfig({
             isTitle: true,
             required: true,
             ui: {
-              // component: wrapFieldsWithMeta(({field, input, meta}) => {
+              component: wrapFieldsWithMeta(({ field, input, meta }) => {
+                // https://final-form.org/docs/react-final-form/types/FieldRenderProps
+                return (
+                  <>
+                    <InputTextWithWarning
+                      input={input}
+                      maxLen={60}
+                      inputClass="shadow-inner focus:shadow-outline focus:border-blue-500 focus:outline-none block text-base placeholder:text-gray-300 px-3 py-2 text-gray-600 w-full bg-white border border-gray-200 transition-all ease-out duration-150 focus:text-gray-900 rounded-md"
+                      warningClass="block font-sans text-xs font-normal text-red-500 pt-3 animate-slide-in whitespace-normal m-0  undefined"
+                    />
+                  </>
+                );
+              }),
+
+              // component: wrapFieldsWithMeta(({ field, input, meta }) => {
               //   return (
-              //     <>
-              //       <WarningLength value={input.value} maxLen={60} />
-              //     </>
+              //     <div>
+              //       <input name="title" id="title" type="text" {...input} />
+              //       <br />
+              //       Value: {input.value}
+              //     </div>
               //   );
-              // })
+              // }),
 
               // component: (value) => {
-              //   <WarningLength value={value} maxLen={60} />;
+              //   return <WarningLength value={value} maxLen={60} />;
               // },
 
-              validate: (value) => {
-                const titleLength = value?.length || 0;
-                if (titleLength > 60) {
-                  return "The title must be shorter than 60 characters";
-                }
-              },
+              // validate: (value) => {
+              //   const titleLength = value?.length || 0;
+              //   if (titleLength > 60) {
+              //     return "The title must be shorter than 60 characters";
+              //   }
+              // },
             },
           },
           {
@@ -100,12 +121,25 @@ export default defineConfig({
             label: "Description",
             required: false,
             ui: {
-              validate: (value) => {
-                const descriptionLength = value?.length || 0;
-                if (descriptionLength > 160) {
-                  return "The description must be shorter than 160 characters";
-                }
-              },
+              component: wrapFieldsWithMeta(({ field, input, meta }) => {
+                // https://final-form.org/docs/react-final-form/types/FieldRenderProps
+                return (
+                  <>
+                    <InputTextWithWarning
+                      input={input}
+                      maxLen={160}
+                      inputClass="shadow-inner focus:shadow-outline focus:border-blue-500 focus:outline-none block text-base placeholder:text-gray-300 px-3 py-2 text-gray-600 w-full bg-white border border-gray-200 transition-all ease-out duration-150 focus:text-gray-900 rounded-md"
+                      warningClass="block font-sans text-xs font-normal text-red-500 pt-3 animate-slide-in whitespace-normal m-0  undefined"
+                    />
+                  </>
+                );
+              }),
+              // validate: (value) => {
+              //   const descriptionLength = value?.length || 0;
+              //   if (descriptionLength > 160) {
+              //     return "The description must be shorter than 160 characters";
+              //   }
+              // },
             },
           },
           {
