@@ -1,12 +1,13 @@
 ---
-title: 'Hello, World!'
+title: "Hello, World!"
 authors: src/content/authors/web-reaper.json
 categories: src/content/categories/astro.json
-datetime: '2023-03-09T05:00:00.000Z'
+datetime: "2023-03-09T05:00:00.000Z"
 description: Astro description
-categoryList:
-  - categories: src/content/categories/css.json
-  - categories: src/content/categories/astro.json
+tags:
+  - world
+  - hello
+  - test tag
 ---
 
 ## Hello World!

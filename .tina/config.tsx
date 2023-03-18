@@ -92,27 +92,6 @@ export default defineConfig({
                   </>
                 );
               }),
-
-              // component: wrapFieldsWithMeta(({ field, input, meta }) => {
-              //   return (
-              //     <div>
-              //       <input name="title" id="title" type="text" {...input} />
-              //       <br />
-              //       Value: {input.value}
-              //     </div>
-              //   );
-              // }),
-
-              // component: (value) => {
-              //   return <WarningLength value={value} maxLen={60} />;
-              // },
-
-              // validate: (value) => {
-              //   const titleLength = value?.length || 0;
-              //   if (titleLength > 60) {
-              //     return "The title must be shorter than 60 characters";
-              //   }
-              // },
             },
           },
           {
@@ -181,13 +160,15 @@ export default defineConfig({
           //   ],
           // },
           {
-            label: "Tags",
-            name: "tags",
             type: "string",
+            name: "tags",
+            label: "Tags",
+            list: true,
             description: "Tags for your post",
             ui: {
               // tags should be lower case only, but this doesn't seem to work
-              // format: (val?: string) => (val ? val.toLowerCase() : ""),
+              // validate: (val?: string) => (val ? val.toLowerCase() : ""),
+              // parse: (val?: string) => val && val.toLowerCase(),
               component: "tags",
             },
           },
