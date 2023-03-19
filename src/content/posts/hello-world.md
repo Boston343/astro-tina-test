@@ -10,6 +10,7 @@ categoryList:
 tags:
   - first post
   - world
+mainImage: /images/desk-pen-paper.jpg
 ---
 
 ## Hello World!
