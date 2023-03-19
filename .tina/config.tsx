@@ -1,5 +1,7 @@
 import { defineConfig, wrapFieldsWithMeta } from "tinacms";
 import React from "react";
+import InputTextWithWarning from "./components/InputTextWithWarning";
+import CustomTags from "./components/CustomTags";
 // import { slugify } from "../src/js/helpers";
 
 // Your hosting provider likely exposes this as an environment variable
@@ -17,23 +19,6 @@ function slugify(text) {
     .replace(/^-+/, "")
     .replace(/-+$/, "");
 }
-
-// --------------------------------------------------------
-// custom length warning react component
-const InputTextWithWarning = (props) => {
-  const { input, maxLen, inputClass, warningClass } = props;
-  const strLen = input?.value?.length || 0;
-  return (
-    <div>
-      <input name={input.name} type="text" className={inputClass} {...input} />
-      {strLen > maxLen ? (
-        <span className={warningClass}>
-          The {input.name} should be shorter than {maxLen.toString()} characters
-        </span>
-      ) : null}
-    </div>
-  );
-};
 
 // --------------------------------------------------------
 export default defineConfig({
@@ -59,7 +44,7 @@ export default defineConfig({
         format: "md",
         ui: {
           filename: {
-            // if disabled, the editor can not edit the filename
+            // if readonly is true, the editor can NOT edit the filename
             readonly: true,
             // values is an object containing all values of the form
             slugify: (values) => {
@@ -166,10 +151,24 @@ export default defineConfig({
             list: true,
             description: "Tags for your post",
             ui: {
-              // tags should be lower case only, but this doesn't seem to work
-              // validate: (val?: string) => (val ? val.toLowerCase() : ""),
-              // parse: (val?: string) => val && val.toLowerCase(),
-              component: "tags",
+              component: wrapFieldsWithMeta(
+                ({ input, field, form, tinaForm }) => {
+                  return (
+                    <>
+                      <CustomTags
+                        input={input}
+                        field={field}
+                        form={form}
+                        tinaForm={tinaForm}
+                        format={(val?: string) =>
+                          val ? val.toLowerCase() : ""
+                        }
+                      />
+                    </>
+                  );
+                }
+              ),
+              placeholder: "Add a tag",
             },
           },
           // {
