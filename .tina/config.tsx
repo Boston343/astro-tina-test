@@ -1,4 +1,4 @@
-import { defineConfig, wrapFieldsWithMeta } from "tinacms";
+import { wrapFieldsWithMeta, defineConfig } from "tinacms";
 import React from "react";
 import InputTextWithWarning from "./components/InputTextWithWarning";
 import CustomTags from "./components/CustomTags";
